@@ -1,6 +1,6 @@
 import { auth, authAll } from '@/util'
 
-export default function directive(app) {
+export default app => {
     // 注册 v-auth 和 v-auth-all 指令
     app.directive('auth', {
         mounted: (el, binding) => {

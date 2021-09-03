@@ -33,9 +33,7 @@ const constantRoutes = [
                 component: () => import('@/views/personal/setting.vue'),
                 meta: {
                     title: '个人设置',
-                    breadcrumbNeste: [
-                        { title: '个人设置', path: '/personal/setting' }
-                    ]
+                    breadcrumbNeste: [{ title: '个人设置', path: '/personal/setting' }]
                 }
             },
             {
@@ -44,9 +42,7 @@ const constantRoutes = [
                 component: () => import('@/views/personal/edit.password.vue'),
                 meta: {
                     title: '修改密码',
-                    breadcrumbNeste: [
-                        { title: '修改密码', path: '/personal/edit/password' }
-                    ]
+                    breadcrumbNeste: [{ title: '修改密码', path: '/personal/edit/password' }]
                 }
             },
             {
@@ -68,10 +64,7 @@ const asyncRoutes = [
             title: '演示',
             icon: 'sidebar-default'
         },
-        children: [
-            MultilevelMenuExample,
-            BreadcrumbExample
-        ]
+        children: [MultilevelMenuExample, BreadcrumbExample]
     }
 ]
 
@@ -88,7 +81,7 @@ const router = createRouter({
     routes: constantRoutes
 })
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     store.state.settings.enableProgress && NProgress.start()
     // 已经登录，但还没根据权限动态生成并挂载路由
     if (store.getters['user/isLogin'] && !store.state.menu.isGenerate) {
@@ -138,12 +131,18 @@ router.beforeEach(async(to, from, next) => {
                                     ) {
                                         for (let i = 0; i < routes.children.length; i++) {
                                             if (routes.children[i].meta.sidebar != false) {
-                                                retnPath = getDeepestPath(routes.children[i], path.resolve(rootPath, routes.path))
+                                                retnPath = getDeepestPath(
+                                                    routes.children[i],
+                                                    path.resolve(rootPath, routes.path)
+                                                )
                                                 break
                                             }
                                         }
                                     } else {
-                                        retnPath = getDeepestPath(routes.children[0], path.resolve(rootPath, routes.path))
+                                        retnPath = getDeepestPath(
+                                            routes.children[0],
+                                            path.resolve(rootPath, routes.path)
+                                        )
                                     }
                                 } else {
                                     retnPath = path.resolve(rootPath, routes.path)
@@ -187,7 +186,8 @@ router.beforeEach(async(to, from, next) => {
 router.afterEach((to, from) => {
     store.state.settings.enableProgress && NProgress.done()
     // 设置页面 title
-    to.meta.title && store.commit('settings/setTitle', typeof to.meta.title === 'function' ? to.meta.title() : to.meta.title)
+    to.meta.title &&
+        store.commit('settings/setTitle', typeof to.meta.title === 'function' ? to.meta.title() : to.meta.title)
     // 判断当前页面是否开启缓存，如果开启，则将当前页面的 name 信息存入 keep-alive 全局状态
     if (to.meta.cache) {
         let componentName = to.matched[to.matched.length - 1].components.default.name

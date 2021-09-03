@@ -3,6 +3,7 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 
+// ElementPlus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // 加载 svg 图标
@@ -12,15 +13,15 @@ import '@/assets/styles/globals.scss'
 // 工具
 import globalProperties from '@/util/global.properties'
 // 自定义指令
-import directive from '@/util/directive'
+import directive from '@/directive'
 
 const $App = createApp(App)
-globalProperties($App)
-
-directive($App)
+// globalProperties($App)
 
 $App.use(store)
     .use(router)
+    .use(directive)
+    .use(globalProperties)
     .use(ElementPlus, {
         size: store.state.settings.elementSize
     })

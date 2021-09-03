@@ -93,16 +93,16 @@
                     <div class="square"></div>
                     <div class="square"></div>
                 </div>
-                <div class="text"><%= title %>载入中…</div>
+                <div class="text">载入中…</div>
             </div>
             <script>
                 const Loading = document.querySelector('.loading')
                 Loading.classList.add('animate')
-                Loading.addEventListener('animationend', function() {
-                    setTimeout(function() {
+                Loading.addEventListener('animationend', function () {
+                    setTimeout(function () {
                         Loading.classList.remove('animate')
                     }, 600)
-                    setTimeout(function() {
+                    setTimeout(function () {
                         Loading.classList.add('animate')
                     }, 1000)
                 })
@@ -110,12 +110,15 @@
         </div>
         <script type="module" src="/src/main.js"></script>
         <% if (debugTool == 'eruda') { %>
-            <script src="//cdn.jsdelivr.net/npm/eruda/eruda.min.js"></script>
-            <script>eruda.init();</script>
-        <% } %>
-        <% if (debugTool == 'vconsole') { %>
-            <script src="//cdn.jsdelivr.net/npm/vconsole/dist/vconsole.min.js"></script>
-            <script>new VConsole();</script>
+        <script src="//cdn.jsdelivr.net/npm/eruda/eruda.min.js"></script>
+        <script>
+            eruda.init()
+        </script>
+        <% } %> <% if (debugTool == 'vconsole') { %>
+        <script src="//cdn.jsdelivr.net/npm/vconsole/dist/vconsole.min.js"></script>
+        <script>
+            new VConsole()
+        </script>
         <% } %>
     </body>
 </html>

@@ -7,7 +7,7 @@ import hotkeys from 'hotkeys-js'
 import mitt from 'mitt'
 dayjs.locale('zh-cn')
 
-export default function globalProperties(app) {
+export default app => {
     // 请求
     app.config.globalProperties.$api = api
     // 鉴权

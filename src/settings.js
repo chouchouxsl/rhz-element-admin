@@ -29,23 +29,23 @@ let globalSettings = {
     // 是否开启面包屑导航
     enableBreadcrumb: true,
     // 是否显示底部版权信息，同时在路由 meta 对象里可以单独设置某个路由是否显示底部版权信息
-    showCopyright: true,
+    showCopyright: false,
     // 版权信息配置，格式为：Copyright © [dates] <company>, All Rights Reserved
     copyrightDates: '2020-2021',
-    copyrightCompany: 'Fantastic-admin',
+    copyrightCompany: 'admin',
     copyrightWebsite: 'https://hooray.github.io/fantastic-admin',
     // 是否开启导航搜索
     enableNavSearch: true,
     // 是否开启移动端适配，开启后当页面宽度小于 992px 时自动切换为移动端展示
     enableMobileAdaptation: true,
     // 是否开启全屏
-    enableFullscreen: false,
+    enableFullscreen: true,
     // 是否开启页面刷新
     enablePageReload: false,
     // 是否开启载入进度条
     enableProgress: true,
     // 是否开启动态标题
-    enableDynamicTitle: false,
+    enableDynamicTitle: true,
     // 是否开启控制台
     enableDashboard: true,
     // 控制台名称

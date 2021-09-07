@@ -27,6 +27,7 @@ router.beforeEach(async (to, from, next) => {
     store.state.settings.enableProgress && NProgress.start()
     // 已经登录，但还没根据权限动态生成并挂载路由
     if (store.getters['user/isLogin'] && !store.state.menu.isGenerate) {
+        await store.dispatch('user/getInfo')
         let accessRoutes = []
         if (!store.state.settings.enableBackendReturnRoute) {
             accessRoutes = await store.dispatch('menu/generateRoutesAtFront', {

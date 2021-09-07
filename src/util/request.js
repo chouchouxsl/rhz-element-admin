@@ -3,7 +3,6 @@ import axios from 'axios'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import store from '@/store'
 import { getToken } from '@/util/cookie'
-// axios.defaults.withCredentials = true;
 
 axios.defaults.headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -39,7 +38,8 @@ service.interceptors.request.use(
                 config.data = qs.stringify(config.data)
             }
         }
-        if (store.getters.token) {
+
+        if (store.state.user.token) {
             // let each request carry token
             // ['X-Token'] is a custom headers key
             // please modify it according to the actual situation
@@ -109,5 +109,28 @@ service.interceptors.response.use(
         return Promise.reject(error)
     }
 )
+
+// get请求
+export function getFetch(url, params, config = {}) {
+    return service({
+        url,
+        params,
+        method: 'get',
+        ...config
+    })
+}
+
+// post请求
+export function postFetch(url, data, config = {}) {
+    return service({
+        url,
+        data,
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        ...config
+    })
+}
 
 export default service

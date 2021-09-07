@@ -8,7 +8,6 @@ const store = useStore()
 // router
 const router = useRouter()
 const route = useRoute()
-console.log('store,router,route :>> ', store, router, route)
 
 /* 初始化数据 */
 const data = reactive({
@@ -16,24 +15,23 @@ const data = reactive({
     // 表单类型，login 登录，reset 重置密码
     formType: 'login',
     loginForm: {
-        account: localStorage.login_account || '',
-        password: '',
-        remember: !!localStorage.login_account
+        username: '',
+        password: ''
     },
     loginRules: {
-        account: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
+        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
         password: [
             { required: true, trigger: 'blur', message: '请输入密码' },
             { min: 6, max: 18, trigger: 'blur', message: '密码长度为6到18位' }
         ]
     },
     resetForm: {
-        account: localStorage.login_account || '',
+        username: '',
         captcha: '',
         newPassword: ''
     },
     resetRules: {
-        account: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
+        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
         captcha: [{ required: true, trigger: 'blur', message: '请输入验证码' }],
         newPassword: [
             { required: true, trigger: 'blur', message: '请输入新密码' },
@@ -60,23 +58,12 @@ const showPassword = () => {
 }
 // 登录
 const handleLogin = () => {
-    login.value.validate((valid: boolean) => {
+    login.value.validate(async (valid: boolean) => {
         if (valid) {
             data.loading = true
-            store
-                .dispatch('user/login', data.loginForm)
-                .then(() => {
-                    data.loading = false
-                    if (data.loginForm.remember) {
-                        localStorage.setItem('login_account', data.loginForm.account)
-                    } else {
-                        localStorage.removeItem('login_account')
-                    }
-                    router.push({ path: data.redirect || '/' })
-                })
-                .catch(() => {
-                    data.loading = false
-                })
+            await store.dispatch('user/login', data.loginForm)
+            data.loading = false
+            router.push({ path: data.redirect || '/' })
         }
     })
 }
@@ -93,9 +80,9 @@ const handleFind = () => {
     })
 }
 // 测试
-const testAccount = (account: string) => {
-    data.loginForm.account = account
-    data.loginForm.password = '123456'
+const testAccount = () => {
+    data.loginForm.username = 'gongyuman@able-elec.com'
+    data.loginForm.password = 'man115'
     handleLogin()
 }
 
@@ -110,6 +97,7 @@ watch(
     }
 )
 
+// 模板用到的数据
 const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, passwordType } = toRefs(data)
 </script>
 
@@ -131,10 +119,10 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                     <h3 class="title">{{ title }}管理后台</h3>
                 </div>
                 <div>
-                    <el-form-item prop="account">
+                    <el-form-item prop="username">
                         <el-input
                             ref="name"
-                            v-model="loginForm.account"
+                            v-model="loginForm.username"
                             placeholder="用户名"
                             type="text"
                             tabindex="1"
@@ -167,10 +155,10 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                         </el-input>
                     </el-form-item>
                 </div>
-                <div class="flex-bar">
+                <!-- <div class="flex-bar">
                     <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>
                     <el-button type="text" @click="formType = 'reset'">忘记密码</el-button>
-                </div>
+                </div> -->
                 <el-button :loading="loading" type="primary" style="width: 100%" @click.prevent="handleLogin">
                     登 录
                 </el-button>
@@ -185,8 +173,8 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                     "
                 >
                     <span style="margin-right: 5px">演示帐号一键登录：</span>
-                    <el-button type="danger" size="mini" @click="testAccount('admin')">admin</el-button>
-                    <el-button type="danger" size="mini" plain @click="testAccount('test')">test</el-button>
+                    <el-button type="danger" size="mini" @click="testAccount()">admin</el-button>
+                    <!-- <el-button type="danger" size="mini" plain @click="testAccount('test')">test</el-button> -->
                 </div>
             </el-form>
             <el-form
@@ -202,10 +190,10 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                     <h3 class="title">重置密码</h3>
                 </div>
                 <div>
-                    <el-form-item prop="account">
+                    <el-form-item prop="username">
                         <el-input
                             ref="name"
-                            v-model="resetForm.account"
+                            v-model="resetForm.username"
                             placeholder="用户名"
                             type="text"
                             tabindex="1"

@@ -1,11 +1,14 @@
 <template>
-    <router-link :to="to" :class="{
-        'title': true,
-        'is-link': $store.state.settings.enableDashboard
-    }" :title="title"
+    <router-link
+        :to="to"
+        :class="{
+            title: true,
+            'is-link': $store.state.settings.enableDashboard
+        }"
+        :title="title"
     >
-        <img v-if="showLogo" :src="logo" class="logo">
-        <span v-if="showTitle">{{ title }}</span>
+        <img v-if="showLogo" :src="logo" class="logo" />
+        <span v-if="showTitle">{{ title }}管理后台</span>
     </router-link>
 </template>
 
@@ -51,7 +54,7 @@ export default {
     padding: 0 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
     height: $g-sidebar-logo-height;
     text-align: center;
     overflow: hidden;

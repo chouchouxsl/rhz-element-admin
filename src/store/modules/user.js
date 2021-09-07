@@ -1,8 +1,10 @@
-import api from '@/api'
+import { login, logout, getInfo } from '@/api/user'
+import { getToken, setToken, removeToken } from '@/util/cookie'
 
 const state = () => ({
-    name: localStorage.account || '',
-    token: localStorage.token || '',
+    name: '',
+    avatar: '',
+    token: getToken() || '',
     permissions: []
 })
 
@@ -11,57 +13,54 @@ const getters = {
 }
 
 const actions = {
-    login({ commit }, data) {
-        return new Promise((resolve, reject) => {
-            // 通过 mock 进行登录
-            api.post('member/login', data, {
-                baseURL: '/mock/'
-            })
-                .then(res => {
-                    commit('setUserData', res.data)
-                    resolve()
-                })
-                .catch(error => {
-                    reject(error)
-                })
+    login({ commit }, { username, password }) {
+        return new Promise(async resolve => {
+            const { data } = await login({ username, password })
+            commit('SET_TOKEN', data.token)
+            setToken(data.token)
+            resolve()
         })
     },
     logout({ commit }) {
-        commit('removeUserData')
-        commit('menu/invalidRoutes', null, { root: true })
-        commit('menu/removeRoutes', null, { root: true })
+        return new Promise(async resolve => {
+            await logout()
+            commit('RESET_STATE')
+            commit('menu/invalidRoutes', null, { root: true })
+            commit('menu/removeRoutes', null, { root: true })
+            resolve()
+        })
     },
-    // 获取我的权限
-    getPermissions({ state, commit }) {
-        return new Promise(resolve => {
-            // 通过 mock 获取权限
-            api.get('member/permission', {
-                baseURL: '/mock/',
-                params: {
-                    account: state.account
-                }
-            }).then(res => {
-                commit('setPermissions', res.data.permissions)
-                resolve(res.data.permissions)
-            })
+    getInfo({ commit }) {
+        return new Promise(async resolve => {
+            const {
+                data: { avatar, realname, roleList }
+            } = await getInfo()
+
+            commit('SET_AVATAR', avatar)
+            commit('SET_NAME', realname)
+            commit('SET_PERMISSIONS', roleList)
+            resolve()
         })
     }
 }
 
 const mutations = {
-    setUserData(state, data) {
-        localStorage.setItem('account', data.account)
-        localStorage.setItem('token', data.token)
-        state.name = data.account
-        state.token = data.token
+    SET_TOKEN: (state, token) => {
+        state.token = token
     },
-    removeUserData(state) {
-        localStorage.removeItem('account')
-        localStorage.removeItem('token')
+    SET_NAME: (state, name) => {
+        state.name = name
+    },
+    SET_AVATAR: (state, avatar) => {
+        state.avatar = avatar
+    },
+    RESET_STATE(state) {
+        removeToken() // must remove  token  first
         state.name = ''
+        state.avatar = ''
         state.token = ''
     },
-    setPermissions(state, permissions) {
+    SET_PERMISSIONS(state, permissions) {
         state.permissions = permissions
     }
 }

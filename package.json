@@ -2,6 +2,7 @@
     "name": "fantastic-admin",
     "version": "0.1.0",
     "scripts": {
+        "start": "npm run dev",
         "dev": "vite",
         "build:test": "vite build --mode test",
         "build": "vite build",

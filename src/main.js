@@ -16,7 +16,6 @@ import globalProperties from '@/util/global.properties'
 import directive from '@/directive'
 
 const $App = createApp(App)
-// globalProperties($App)
 
 $App.use(store)
     .use(router)

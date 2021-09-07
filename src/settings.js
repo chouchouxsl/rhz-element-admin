@@ -13,11 +13,11 @@ let globalSettings = {
      * head 顶部模式
      * single 侧边栏模式（无主导航）
      */
-    menuMode: 'side',
+    menuMode: 'single',
     // Element 组件默认尺寸，支持：large、medium、small、mini
     elementSize: 'large',
     // 是否开启侧边栏展开收起按钮
-    enableSidebarCollapse: false,
+    enableSidebarCollapse: true,
     // 侧边栏是否收起
     sidebarCollapse: false,
     // 切换侧边栏同时跳转页面
@@ -33,7 +33,7 @@ let globalSettings = {
     // 版权信息配置，格式为：Copyright © [dates] <company>, All Rights Reserved
     copyrightDates: '2020-2021',
     copyrightCompany: 'admin',
-    copyrightWebsite: 'https://hooray.github.io/fantastic-admin',
+    copyrightWebsite: 'git@github.com:chouchouxsl/rhz-element-admin.git',
     // 是否开启导航搜索
     enableNavSearch: true,
     // 是否开启移动端适配，开启后当页面宽度小于 992px 时自动切换为移动端展示

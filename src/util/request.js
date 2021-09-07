@@ -1,8 +1,8 @@
 import qs from 'qs'
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken } from '@/util/cookie'
 // axios.defaults.withCredentials = true;
 
 axios.defaults.headers = {
@@ -10,7 +10,7 @@ axios.defaults.headers = {
 }
 // create an axios instance
 const service = axios.create({
-    baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+    baseURL: import.meta.env.VITE_APP_API_BASEURL, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000 * 6 // request timeout
 })
@@ -71,7 +71,7 @@ service.interceptors.response.use(
 
         // if the custom code is not 20000, it is judged as an error.
         if (res.code !== 200) {
-            Message({
+            ElMessage({
                 message: res.message || 'Error',
                 type: 'error',
                 duration: 5 * 1000
@@ -80,7 +80,7 @@ service.interceptors.response.use(
             // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
             if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
                 // to re-login
-                MessageBox.confirm(
+                ElMessageBox.confirm(
                     'You have been logged out, you can cancel to stay on this page, or log in again',
                     'Confirm logout',
                     {
@@ -101,7 +101,7 @@ service.interceptors.response.use(
     },
     error => {
         console.log('err' + error) // for debug
-        Message({
+        ElMessage({
             message: error.message,
             type: 'error',
             duration: 5 * 1000

@@ -5,68 +5,9 @@ import 'nprogress/nprogress.css' // progress bar style
 import path from 'path-browserify'
 
 // 固定路由
-const constantRoutes = [
-    {
-        path: '/login',
-        name: 'login',
-        component: () => import('@/views/login.vue'),
-        meta: {
-            title: '登录'
-        }
-    },
-    {
-        path: '/',
-        component: () => import('@/layout/index.vue'),
-        redirect: '/dashboard',
-        children: [
-            {
-                path: 'dashboard',
-                name: 'dashboard',
-                component: () => import('@/views/index.vue'),
-                meta: {
-                    title: () => store.state.settings.dashboardTitle
-                }
-            },
-            {
-                path: 'personal/setting',
-                name: 'personalSetting',
-                component: () => import('@/views/personal/setting.vue'),
-                meta: {
-                    title: '个人设置',
-                    breadcrumbNeste: [{ title: '个人设置', path: '/personal/setting' }]
-                }
-            },
-            {
-                path: 'personal/edit/password',
-                name: 'personalEditPassword',
-                component: () => import('@/views/personal/edit.password.vue'),
-                meta: {
-                    title: '修改密码',
-                    breadcrumbNeste: [{ title: '修改密码', path: '/personal/edit/password' }]
-                }
-            },
-            {
-                path: 'reload',
-                name: 'reload',
-                component: () => import('@/views/reload.vue')
-            }
-        ]
-    }
-]
-
-import MultilevelMenuExample from './modules/multilevel.menu.example'
-import BreadcrumbExample from './modules/breadcrumb.example'
-
+import ConstantRoutes from './modules/constantRoutes'
 // 动态路由（异步路由、导航栏路由）
-const asyncRoutes = [
-    {
-        meta: {
-            title: '演示',
-            icon: 'sidebar-default'
-        },
-        children: [MultilevelMenuExample, BreadcrumbExample]
-    }
-]
+import asyncRoutes from './modules/asyncRoutes'
 
 const lastRoute = {
     path: '/:pathMatch(.*)*',
@@ -78,7 +19,8 @@ const lastRoute = {
 
 const router = createRouter({
     history: createWebHashHistory(),
-    routes: constantRoutes
+    routes: ConstantRoutes,
+    scrollBehavior: () => ({ y: 0 })
 })
 
 router.beforeEach(async (to, from, next) => {

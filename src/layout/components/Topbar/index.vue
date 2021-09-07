@@ -1,17 +1,36 @@
 <template>
-    <div class="topbar-container" :class="{
-        'fixed': $store.state.settings.topbarFixed,
-        'shadow': scrollTop
-    }" data-fixed-calc-width
+    <div
+        class="topbar-container"
+        :class="{
+            fixed: $store.state.settings.topbarFixed,
+            shadow: scrollTop
+        }"
+        data-fixed-calc-width
     >
         <div class="left-box">
-            <div v-if="$store.state.settings.mode === 'mobile' || (['side', 'head', 'single'].includes($store.state.settings.menuMode) && $store.state.settings.enableSidebarCollapse)" class="sidebar-collapse" :class="{'is-collapse': $store.state.settings.sidebarCollapse}" @click="$store.commit('settings/toggleSidebarCollapse')">
+            <div
+                v-if="
+                    $store.state.settings.mode === 'mobile' ||
+                    (['side', 'head', 'single'].includes($store.state.settings.menuMode) &&
+                        $store.state.settings.enableSidebarCollapse)
+                "
+                class="sidebar-collapse"
+                :class="{ 'is-collapse': $store.state.settings.sidebarCollapse }"
+                @click="$store.commit('settings/toggleSidebarCollapse')"
+            >
                 <svg-icon name="toolbar-collapse" />
             </div>
-            <el-breadcrumb v-if="$store.state.settings.enableBreadcrumb && $store.state.settings.mode === 'pc'" separator-class="el-icon-arrow-right">
+            <el-breadcrumb
+                v-if="$store.state.settings.enableBreadcrumb && $store.state.settings.mode === 'pc'"
+                separator-class="el-icon-arrow-right"
+            >
                 <transition-group name="breadcrumb">
                     <template v-for="(item, index) in breadcrumbList">
-                        <el-breadcrumb-item v-if="index < breadcrumbList.length - 1" :key="item.path" :to="pathCompile(item.path)">
+                        <el-breadcrumb-item
+                            v-if="index < breadcrumbList.length - 1"
+                            :key="item.path"
+                            :to="pathCompile(item.path)"
+                        >
                             {{ item.title }}
                         </el-breadcrumb-item>
                         <el-breadcrumb-item v-else :key="item.path">

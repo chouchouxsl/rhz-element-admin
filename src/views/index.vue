@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import PageHeader from '@/components/PageHeader/index.vue'
+
+const { proxy }: any = getCurrentInstance()
+
+console.log('proxy, ctx :>> ', proxy.$dayjs())
 
 const title = ref<string>('初始化项目')
 const onClick = (e: Event, title: string) => {
@@ -14,7 +18,4 @@ const onClick = (e: Event, title: string) => {
     </PageHeader>
 </template>
 
-<style scoped lang="scss">
-.containar {
-}
-</style>
+<style scoped lang="scss"></style>

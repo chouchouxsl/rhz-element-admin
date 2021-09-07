@@ -1,16 +1,30 @@
 <template>
     <div class="user">
         <div class="tools">
-            <span v-if="$store.state.settings.enableNavSearch" class="item" @click="$eventBus.emit('global-search-toggle')">
+            <span
+                v-if="$store.state.settings.enableNavSearch"
+                class="item"
+                @click="$eventBus.emit('global-search-toggle')"
+            >
                 <svg-icon name="search" />
             </span>
-            <span v-if="$store.state.settings.mode === 'pc' && isFullscreenEnable && $store.state.settings.enableFullscreen" class="item" @click="fullscreen">
+            <span
+                v-if="
+                    $store.state.settings.mode === 'pc' && isFullscreenEnable && $store.state.settings.enableFullscreen
+                "
+                class="item"
+                @click="fullscreen"
+            >
                 <svg-icon :name="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" />
             </span>
             <span v-if="$store.state.settings.enablePageReload" class="item" @click="reload()">
                 <svg-icon name="toolbar-reload" />
             </span>
-            <span v-if="$store.state.settings.enableThemeSetting" class="item" @click="$eventBus.emit('global-theme-toggle')">
+            <span
+                v-if="$store.state.settings.enableThemeSetting"
+                class="item"
+                @click="$eventBus.emit('global-theme-toggle')"
+            >
                 <svg-icon name="toolbar-theme" />
             </span>
         </div>
@@ -19,12 +33,14 @@
                 <el-avatar size="medium">
                     <i class="el-icon-user-solid" />
                 </el-avatar>
-                {{ $store.state.user.account }}
+                {{ $store.state.user.name }}
                 <i class="el-icon-caret-bottom" />
             </div>
             <template #dropdown>
                 <el-dropdown-menu class="user-dropdown">
-                    <el-dropdown-item v-if="$store.state.settings.enableDashboard" command="dashboard">控制台</el-dropdown-item>
+                    <el-dropdown-item v-if="$store.state.settings.enableDashboard" command="dashboard">
+                        控制台
+                    </el-dropdown-item>
                     <el-dropdown-item command="setting">个人设置</el-dropdown-item>
                     <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
@@ -84,7 +100,10 @@ export default {
             }
         },
         pro() {
-            window.open(`https://hooray.${location.origin.includes('gitee') ? 'gitee' : 'github'}.io/fantastic-admin/vue3/pro`, 'top')
+            window.open(
+                `https://hooray.${location.origin.includes('gitee') ? 'gitee' : 'github'}.io/fantastic-admin/vue3/pro`,
+                'top'
+            )
         }
     }
 }

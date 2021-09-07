@@ -127,7 +127,7 @@ const getters = {
     routes: (state, getters, rootState) => {
         let routes
         if (rootState.settings.menuMode === 'single') {
-            routes = [{children: []}]
+            routes = [{ children: [] }]
             state.routes.map(item => {
                 routes[0].children.push(...item.children)
             })
@@ -143,7 +143,7 @@ const getters = {
 
 const actions = {
     // 根据权限动态生成路由（前端生成）
-    generateRoutesAtFront({rootState, dispatch, commit}, data) {
+    generateRoutesAtFront({ rootState, dispatch, commit }, data) {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async resolve => {
             let accessedRoutes
@@ -152,21 +152,23 @@ const actions = {
                 const permissions = await dispatch('user/getPermissions', null, { root: true })
                 accessedRoutes = filterAsyncRoutes(data.asyncRoutes, permissions)
             } else {
-                accessedRoutes = data.asyncRoutes
+                accessedRoutes = deepClone(data.asyncRoutes)
             }
             commit('setRoutes', accessedRoutes)
             commit('setHeaderActived', data.currentPath)
             let routes = []
-            accessedRoutes.map(item => {
+            accessedRoutes.forEach(item => {
                 routes.push(...item.children)
             })
             // 将三级及以上路由数据拍平成二级
-            routes.map(item => {
+            routes.forEach(item => {
                 if (item.children) {
-                    item.children = flatAsyncRoutes(item.children, [{
-                        path: item.path,
-                        title: item.meta.title
-                    }])
+                    item.children = flatAsyncRoutes(item.children, [
+                        {
+                            path: item.path,
+                            title: item.meta.title
+                        }
+                    ])
                 }
             })
             commit('setDefaultOpenedPaths', routes)
@@ -183,16 +185,18 @@ const actions = {
                 commit('setRoutes', accessedRoutes)
                 commit('setHeaderActived', data.currentPath)
                 let routes = []
-                accessedRoutes.map(item => {
+                accessedRoutes.forEach(item => {
                     routes.push(...item.children)
                 })
                 // 将三级及以上路由数据拍平成二级
-                routes.map(item => {
+                routes.forEach(item => {
                     if (item.children) {
-                        item.children = flatAsyncRoutes(item.children, [{
-                            path: item.path,
-                            title: item.meta.title
-                        }])
+                        item.children = flatAsyncRoutes(item.children, [
+                            {
+                                path: item.path,
+                                title: item.meta.title
+                            }
+                        ])
                     }
                 })
                 commit('setDefaultOpenedPaths', routes)

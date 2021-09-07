@@ -13,48 +13,46 @@ const toLogin = () => {
     })
 }
 
-const api = axios.create({
+const service = axios.create({
     baseURL: import.meta.env.DEV ? '/proxy/' : import.meta.env.VITE_APP_API_BASEURL,
     timeout: 10000,
     responseType: 'json'
 })
 
-api.interceptors.request.use(
-    request => {
-        /**
-         * 全局拦截请求发送前提交的参数
-         * 以下代码为示例，在登录状态下，分别对 post 和 get 请求加上 token 参数
-         */
-        if (request.method == 'post') {
-            if (request.data instanceof FormData) {
-                if (store.getters['token/isLogin']) {
-                    // 如果是 FormData 类型（上传图片）
-                    request.data.append('token', store.state.token.token)
-                }
-            } else {
-                // 带上 token
-                if (request.data == undefined) {
-                    request.data = {}
-                }
-                if (store.getters['token/isLogin']) {
-                    request.data.token = store.state.token.token
-                }
-                // request.data = Qs.stringify(request.data)
+service.interceptors.request.use(request => {
+    /**
+     * 全局拦截请求发送前提交的参数
+     * 以下代码为示例，在登录状态下，分别对 post 和 get 请求加上 token 参数
+     */
+    if (request.method == 'post') {
+        if (request.data instanceof FormData) {
+            if (store.getters['token/isLogin']) {
+                // 如果是 FormData 类型（上传图片）
+                request.data.append('token', store.state.token.token)
             }
         } else {
             // 带上 token
-            if (request.params == undefined) {
-                request.params = {}
+            if (request.data == undefined) {
+                request.data = {}
             }
             if (store.getters['token/isLogin']) {
-                request.params.token = store.state.token.token
+                request.data.token = store.state.token.token
             }
+            // request.data = Qs.stringify(request.data)
         }
-        return request
+    } else {
+        // 带上 token
+        if (request.params == undefined) {
+            request.params = {}
+        }
+        if (store.getters['token/isLogin']) {
+            request.params.token = store.state.token.token
+        }
     }
-)
+    return request
+})
 
-api.interceptors.response.use(
+service.interceptors.response.use(
     response => {
         /**
          * 全局拦截请求发送后返回的数据，如果数据有报错则在这做全局的错误提示
@@ -92,4 +90,4 @@ api.interceptors.response.use(
     }
 )
 
-export default api
+export default service

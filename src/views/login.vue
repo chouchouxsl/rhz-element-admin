@@ -1,3 +1,118 @@
+<script setup lang="ts">
+import { nextTick, reactive, ref, toRefs, watch } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+// vuex
+const store = useStore()
+// router
+const router = useRouter()
+const route = useRoute()
+console.log('store,router,route :>> ', store, router, route)
+
+/* 初始化数据 */
+const data = reactive({
+    title: import.meta.env.VITE_APP_TITLE,
+    // 表单类型，login 登录，reset 重置密码
+    formType: 'login',
+    loginForm: {
+        account: localStorage.login_account || '',
+        password: '',
+        remember: !!localStorage.login_account
+    },
+    loginRules: {
+        account: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
+        password: [
+            { required: true, trigger: 'blur', message: '请输入密码' },
+            { min: 6, max: 18, trigger: 'blur', message: '密码长度为6到18位' }
+        ]
+    },
+    resetForm: {
+        account: localStorage.login_account || '',
+        captcha: '',
+        newPassword: ''
+    },
+    resetRules: {
+        account: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
+        captcha: [{ required: true, trigger: 'blur', message: '请输入验证码' }],
+        newPassword: [
+            { required: true, trigger: 'blur', message: '请输入新密码' },
+            { min: 6, max: 18, trigger: 'blur', message: '密码长度为6到18位' }
+        ]
+    },
+    loading: false,
+    passwordType: 'password',
+    redirect: ''
+})
+
+/* 定义ref DOM */
+const password = ref<ElRef>(null)
+const login = ref<ElRef>(null)
+const reset = ref<ElRef>(null)
+
+/* 事件 */
+// 查看密码
+const showPassword = () => {
+    data.passwordType = data.passwordType === 'password' ? '' : 'password'
+    nextTick(() => {
+        password.value.focus()
+    })
+}
+// 登录
+const handleLogin = () => {
+    login.value.validate((valid: boolean) => {
+        if (valid) {
+            data.loading = true
+            store
+                .dispatch('user/login', data.loginForm)
+                .then(() => {
+                    data.loading = false
+                    if (data.loginForm.remember) {
+                        localStorage.setItem('login_account', data.loginForm.account)
+                    } else {
+                        localStorage.removeItem('login_account')
+                    }
+                    router.push({ path: data.redirect || '/' })
+                })
+                .catch(() => {
+                    data.loading = false
+                })
+        }
+    })
+}
+// 重置
+const handleFind = () => {
+    ElMessage({
+        message: '重置密码仅提供界面演示，无实际功能，需开发者自行扩展',
+        type: 'info'
+    })
+    reset.value.validate((valid: boolean) => {
+        if (valid) {
+            // 这里编写业务代码
+        }
+    })
+}
+// 测试
+const testAccount = (account: string) => {
+    data.loginForm.account = account
+    data.loginForm.password = '123456'
+    handleLogin()
+}
+
+/* 监听 */
+watch(
+    route,
+    route => {
+        data.redirect = (route.query && route.query.redirect) as string
+    },
+    {
+        immediate: true
+    }
+)
+
+const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, passwordType } = toRefs(data)
+</script>
+
 <template>
     <div>
         <div class="bg-banner" />
@@ -5,7 +120,7 @@
             <div class="login-banner" />
             <el-form
                 v-show="formType == 'login'"
-                ref="loginForm"
+                ref="login"
                 :model="loginForm"
                 :rules="loginRules"
                 class="login-form"
@@ -76,7 +191,7 @@
             </el-form>
             <el-form
                 v-show="formType == 'reset'"
-                ref="resetForm"
+                ref="reset"
                 :model="resetForm"
                 :rules="resetRules"
                 class="login-form"
@@ -151,103 +266,9 @@
                 </el-row>
             </el-form>
         </div>
-        <Copyright v-if="$store.state.settings.showCopyright" />
+        <Copyright v-if="store.state.settings.showCopyright" />
     </div>
 </template>
-
-<script>
-export default {
-    name: 'Login',
-    data() {
-        return {
-            title: import.meta.env.VITE_APP_TITLE,
-            // 表单类型，login 登录，reset 重置密码
-            formType: 'login',
-            loginForm: {
-                account: localStorage.login_account || '',
-                password: '',
-                remember: !!localStorage.login_account
-            },
-            loginRules: {
-                account: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
-                password: [
-                    { required: true, trigger: 'blur', message: '请输入密码' },
-                    { min: 6, max: 18, trigger: 'blur', message: '密码长度为6到18位' }
-                ]
-            },
-            resetForm: {
-                account: localStorage.login_account || '',
-                captcha: '',
-                newPassword: ''
-            },
-            resetRules: {
-                account: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
-                captcha: [{ required: true, trigger: 'blur', message: '请输入验证码' }],
-                newPassword: [
-                    { required: true, trigger: 'blur', message: '请输入新密码' },
-                    { min: 6, max: 18, trigger: 'blur', message: '密码长度为6到18位' }
-                ]
-            },
-            loading: false,
-            passwordType: 'password',
-            redirect: undefined
-        }
-    },
-    watch: {
-        $route: {
-            handler: function (route) {
-                this.redirect = route.query && route.query.redirect
-            },
-            immediate: true
-        }
-    },
-    methods: {
-        showPassword() {
-            this.passwordType = this.passwordType === 'password' ? '' : 'password'
-            this.$nextTick(() => {
-                this.$refs.password.focus()
-            })
-        },
-        handleLogin() {
-            this.$refs.loginForm.validate(valid => {
-                if (valid) {
-                    this.loading = true
-                    this.$store
-                        .dispatch('user/login', this.loginForm)
-                        .then(() => {
-                            this.loading = false
-                            if (this.loginForm.remember) {
-                                localStorage.setItem('login_account', this.loginForm.account)
-                            } else {
-                                localStorage.removeItem('login_account')
-                            }
-                            this.$router.push({ path: this.redirect || '/' })
-                        })
-                        .catch(() => {
-                            this.loading = false
-                        })
-                }
-            })
-        },
-        handleFind() {
-            this.$message({
-                message: '重置密码仅提供界面演示，无实际功能，需开发者自行扩展',
-                type: 'info'
-            })
-            this.$refs.resetForm.validate(valid => {
-                if (valid) {
-                    // 这里编写业务代码
-                }
-            })
-        },
-        testAccount(account) {
-            this.loginForm.account = account
-            this.loginForm.password = '123456'
-            this.handleLogin()
-        }
-    }
-}
-</script>
 
 <style lang="scss" scoped>
 [data-mode='mobile'] {

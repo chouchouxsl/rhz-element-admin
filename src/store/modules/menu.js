@@ -1,6 +1,6 @@
 import path from 'path-browserify'
 import { deepClone } from '@/util'
-import api from '@/api'
+import api from '@/api/mock'
 
 function hasPermission(permissions, route) {
     let isAuth = false

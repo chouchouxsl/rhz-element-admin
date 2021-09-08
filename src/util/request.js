@@ -29,8 +29,6 @@ service.interceptors.request.use(
 
             delete config.params.pageNum
             delete config.params.pageSize
-
-            console.log('params :>> ', config.params)
         }
         // do something before request is sent
         if (config.method === 'post' && !config.isLogin) {

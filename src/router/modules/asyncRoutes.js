@@ -9,7 +9,7 @@ const asyncRoutes = [
             title: '勿删',
             icon: 'sidebar-default'
         },
-        children: [MultilevelMenuExample, BreadcrumbExample, ...customizationRoutes]
+        children: [...customizationRoutes]
     }
 ]
 

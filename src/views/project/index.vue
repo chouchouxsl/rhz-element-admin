@@ -11,7 +11,9 @@
                             @clear="onSearch"
                             class="input-with-select"
                         >
-                            <el-button slot="append" icon="el-icon-search" @click="onSearch"></el-button>
+                            <template #append>
+                                <el-button icon="el-icon-search" @click="onSearch"></el-button>
+                            </template>
                         </el-input>
                     </el-col>
                     <el-col :span="12">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, getCurrentInstance } from 'vue'
-import PageHeader from '@/components/PageHeader/index.vue'
+import PageHeader from '@/components/pageHeader/index.vue'
 
 const { proxy }: any = getCurrentInstance()
 
@@ -13,8 +13,10 @@ const onClick = (e: Event, title: string) => {
 </script>
 
 <template>
-    <PageHeader :title="title">
-        <h1 @click="onClick($event, title)">{{ title }}</h1>
+    <PageHeader>
+        <template #left>
+            <h1 @click="onClick($event, title)">{{ title }}</h1>
+        </template>
     </PageHeader>
 </template>
 

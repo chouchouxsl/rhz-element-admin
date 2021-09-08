@@ -35,14 +35,16 @@
                             :props="defaultProps"
                             empty-text="无使用后台的权限"
                         >
-                            <span class="custom-tree-node" slot-scope="{ node, data }">
-                                <span class="tree-lable">{{ node.label }}</span>
-                                <el-tooltip v-if="data.description" :content="data.description" placement="top">
-                                    <span class="tree-description">
-                                        {{ data.description }}
-                                    </span>
-                                </el-tooltip>
-                            </span>
+                            <template #default="{ node, data }">
+                                <span class="custom-tree-node">
+                                    <span class="tree-lable">{{ node.label }}</span>
+                                    <el-tooltip v-if="data.description" :content="data.description" placement="top">
+                                        <span class="tree-description">
+                                            {{ data.description }}
+                                        </span>
+                                    </el-tooltip>
+                                </span>
+                            </template>
                         </el-tree>
                     </div>
                 </el-form-item>
@@ -94,13 +96,13 @@ export default {
             set(val) {
                 console.log('val :>> ', val)
                 if (val) {
-                    this.$nextTick(function() {
+                    this.$nextTick(function () {
                         // 全选
                         this.$refs.tree.setCheckedNodes(this.treeList)
                         this.form.function_ids = this.$refs.tree.getCheckedKeys()
                     })
                 } else {
-                    this.$nextTick(function() {
+                    this.$nextTick(function () {
                         // 反选
                         this.$refs.tree.setCheckedKeys([])
                         this.form.function_ids = []

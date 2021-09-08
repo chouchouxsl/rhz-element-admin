@@ -41,7 +41,7 @@
                     <el-dropdown-item v-if="$store.state.settings.enableDashboard" command="dashboard">
                         控制台
                     </el-dropdown-item>
-                    <el-dropdown-item command="setting">个人设置</el-dropdown-item>
+                    <!-- <el-dropdown-item command="setting">个人设置</el-dropdown-item> -->
                     <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </template>
@@ -98,12 +98,6 @@ export default {
                     })
                     break
             }
-        },
-        pro() {
-            window.open(
-                `https://hooray.${location.origin.includes('gitee') ? 'gitee' : 'github'}.io/fantastic-admin/vue3/pro`,
-                'top'
-            )
         }
     }
 }

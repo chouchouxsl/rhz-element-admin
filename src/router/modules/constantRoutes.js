@@ -21,29 +21,6 @@ const constantRoutes = [
                 meta: {
                     title: () => store.state.settings.dashboardTitle
                 }
-            },
-            {
-                path: 'personal/setting',
-                name: 'personalSetting',
-                component: () => import('@/views/personal/setting.vue'),
-                meta: {
-                    title: '个人设置',
-                    breadcrumbNeste: [{ title: '个人设置', path: '/personal/setting' }]
-                }
-            },
-            {
-                path: 'personal/edit/password',
-                name: 'personalEditPassword',
-                component: () => import('@/views/personal/edit.password.vue'),
-                meta: {
-                    title: '修改密码',
-                    breadcrumbNeste: [{ title: '修改密码', path: '/personal/edit/password' }]
-                }
-            },
-            {
-                path: 'reload',
-                name: 'reload',
-                component: () => import('@/views/reload.vue')
             }
         ]
     }

@@ -1,5 +1,6 @@
 import MultilevelMenuExample from './multilevel.menu.example'
 import BreadcrumbExample from './breadcrumb.example'
+import customizationRoutes from './customizationRoutes'
 
 // 动态路由（异步路由、导航栏路由）
 const asyncRoutes = [
@@ -8,7 +9,7 @@ const asyncRoutes = [
             title: '勿删',
             icon: 'sidebar-default'
         },
-        children: [MultilevelMenuExample, BreadcrumbExample]
+        children: [MultilevelMenuExample, BreadcrumbExample, ...customizationRoutes]
     }
 ]
 

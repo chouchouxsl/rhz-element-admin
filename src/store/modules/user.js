@@ -41,6 +41,12 @@ const actions = {
             commit('SET_PERMISSIONS', roleList)
             resolve()
         })
+    },
+    resetToken({ commit }) {
+        return new Promise(resolve => {
+            commit('RESET_STATE')
+            resolve()
+        })
     }
 }
 

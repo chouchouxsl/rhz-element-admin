@@ -51,7 +51,7 @@ export default {
     z-index: 1000;
     top: 0;
     width: inherit;
-    padding: 0 10px;
+    padding: 0 14px;
     display: flex;
     align-items: center;
     // justify-content: center;

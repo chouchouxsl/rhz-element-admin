@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import store from '@/store'
 import { getToken } from '@/util/cookie'
+import router from '@/router'
 
 axios.defaults.headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -94,6 +95,9 @@ service.interceptors.response.use(
                     })
                 })
             }
+            store.dispatch('user/resetToken').then(() => {
+                location.reload()
+            })
             return Promise.reject(new Error(res.message || 'Error'))
         } else {
             return res
@@ -106,6 +110,7 @@ service.interceptors.response.use(
             type: 'error',
             duration: 5 * 1000
         })
+
         return Promise.reject(error)
     }
 )

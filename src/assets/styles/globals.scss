@@ -44,10 +44,11 @@ body {
 }
 [data-sidebar-no-collapse] {
     [data-fixed-calc-width] {
-        transform: translateX(-50%) translateX(division($g-main-sidebar-width, 2)) translateX(division($g-sub-sidebar-width, 2));
+        transform: translateX(-50%) translateX(division($g-main-sidebar-width, 2))
+            translateX(division($g-sub-sidebar-width, 2));
     }
-    &[data-menu-mode=head],
-    &[data-menu-mode=single] {
+    &[data-menu-mode='head'],
+    &[data-menu-mode='single'] {
         [data-fixed-calc-width] {
             width: calc(100% - #{$g-sub-sidebar-width});
             transform: translateX(-50%) translateX(division($g-sub-sidebar-width, 2));
@@ -59,15 +60,15 @@ body {
         width: calc(100% - #{$g-main-sidebar-width} - 64px);
         transform: translateX(-50%) translateX(division($g-main-sidebar-width, 2)) translateX(32px);
     }
-    &[data-menu-mode=head],
-    &[data-menu-mode=single] {
+    &[data-menu-mode='head'],
+    &[data-menu-mode='single'] {
         [data-fixed-calc-width] {
             width: calc(100% - 64px);
             transform: translateX(-50%) translateX(32px);
         }
     }
 }
-[data-mode=mobile] {
+[data-mode='mobile'] {
     [data-fixed-calc-width] {
         width: 100% !important;
         transform: translateX(-50%) !important;
@@ -82,5 +83,17 @@ textarea {
     margin: 20px 0;
     .el-button + .el-dropdown {
         margin-left: 10px;
+    }
+}
+
+// main-container global css
+.app-container {
+    padding: 20px 20px 60px;
+    .main-list {
+        border-radius: 6px;
+        padding: 20px;
+        margin-top: 20px;
+        width: 100%;
+        background-color: #fff;
     }
 }

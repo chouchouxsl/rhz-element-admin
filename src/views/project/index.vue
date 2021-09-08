@@ -76,16 +76,18 @@
                             <span class="el-dropdown-link">
                                 <i class="el-icon-more"></i>
                             </span>
-                            <el-dropdown-menu #dropdown>
-                                <el-dropdown-item>
-                                    <span @click="disableItem(scope.row)">
-                                        {{ scope.row.status ? '禁用' : '恢复' }}
-                                    </span>
-                                </el-dropdown-item>
-                                <el-dropdown-item>
-                                    <span @click="deleteItem(scope.row)">删除</span>
-                                </el-dropdown-item>
-                            </el-dropdown-menu>
+                            <template #dropdown>
+                                <el-dropdown-menu>
+                                    <el-dropdown-item>
+                                        <span @click="disableItem(scope.row)">
+                                            {{ scope.row.status ? '禁用' : '恢复' }}
+                                        </span>
+                                    </el-dropdown-item>
+                                    <el-dropdown-item>
+                                        <span @click="deleteItem(scope.row)">删除</span>
+                                    </el-dropdown-item>
+                                </el-dropdown-menu>
+                            </template>
                         </el-dropdown>
                     </template>
                 </el-table-column>

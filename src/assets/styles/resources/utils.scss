@@ -80,8 +80,10 @@
     flex-direction: $fd;
     flex-wrap: $warp;
 }
+
 @mixin base-box {
     padding: 20px;
+    border-radius: 6px;
     background-color: #fff;
 }
 
@@ -146,8 +148,4 @@
     align-items: $ali;
     flex-direction: $fd;
     flex-wrap: $warp;
-}
-@mixin base-box {
-    padding: 20px;
-    background-color: #fff;
 }

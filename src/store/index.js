@@ -8,6 +8,6 @@ for (const path in modulesContext) {
 
 export default createStore({
     modules: modules,
-    strict: !import.meta.env.PROD,
-    plugins: !import.meta.env.PROD ? [createLogger()] : []
+    strict: !import.meta.env.PROD
+    // plugins: !import.meta.env.PROD ? [createLogger()] : []
 })

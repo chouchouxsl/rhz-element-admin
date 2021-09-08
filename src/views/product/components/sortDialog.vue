@@ -1,12 +1,5 @@
 <template>
-    <el-dialog
-        title="设置排序"
-        v-if="isShow"
-        :visible.sync="isShow"
-        width="320px"
-        top="30vh"
-        :before-close="handlerColse"
-    >
+    <el-dialog title="设置排序" v-if="isShow" v-model="isShow" width="320px" top="30vh" :before-close="handlerColse">
         <el-form :model="dialogItem" label-width="95px">
             <el-form-item label="将排序改为">
                 <el-input-number
@@ -21,10 +14,12 @@
                 ></el-input-number>
             </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="handlerColse">取 消</el-button>
-            <el-button type="primary" @click="saveSort">确 认</el-button>
-        </div>
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button @click="handlerColse">取 消</el-button>
+                <el-button type="primary" @click="saveSort">确 认</el-button>
+            </div>
+        </template>
     </el-dialog>
 </template>
 
@@ -36,9 +31,10 @@ export default {
             default: false
         },
         sort: {
-            type: Number | String
+            type: [Number, String]
         }
     },
+    emits: ['saveSort'],
     data() {
         return {
             dialogItem: {

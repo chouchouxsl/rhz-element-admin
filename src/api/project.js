@@ -3,6 +3,9 @@
  */
 import { getFetch, postFetch } from '@/util/request'
 
+// 上传接口
+export const getPolicy = (params, config) => postFetch('/file/getPolicy', params, config)
+
 // 获取项目列表
 export const getProjectList = (params, config) => getFetch('/common/api/34-project_list/admin_project', params, config)
 

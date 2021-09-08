@@ -74,7 +74,7 @@
                 :current-page.sync="tablePages.pageNum"
                 @current-change="count => pageChange(count)"
                 :page-size="tablePages.pageSize"
-                layout="total, prev, pager, next, jumper"
+                layout="prev, pager, next"
                 style="margin-top: 20px"
                 :total="tablePages.total"
             ></el-pagination>

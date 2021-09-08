@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { getPolicy } from '@/api/common'
+import { getPolicy } from '@/api/project'
 
 export default {
     props: {

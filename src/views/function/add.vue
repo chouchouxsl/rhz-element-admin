@@ -136,7 +136,7 @@
                 </template>
             </div>
         </el-form>
-        <FooterBtn :isEdit="!!form.id" @save="onSubmit"></FooterBtn>
+        <FooterBtn :isEdit="!!$route.params.id" @save="onSubmit"></FooterBtn>
     </div>
 </template>
 

@@ -99,7 +99,7 @@
                 @current-change="pageChange"
                 :current-page.sync="tablePages.pageNum"
                 :page-size="tablePages.pageSize"
-                layout="total, prev, pager, next, jumper"
+                layout="prev, pager, next"
                 style="margin-top: 20px"
                 :total="tablePages.total"
             ></el-pagination>

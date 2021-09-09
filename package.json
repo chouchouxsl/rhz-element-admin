@@ -49,6 +49,7 @@
         "stylelint-config-standard": "^22.0.0",
         "stylelint-scss": "^3.20.1",
         "svgo": "^2.5.0",
+        "unplugin-auto-import": "^0.4.5",
         "unplugin-vue-components": "^0.14.4",
         "vite": "^2.5.1",
         "vite-plugin-babel-import": "^2.0.5",

@@ -4,6 +4,8 @@ import router from '@/router/index'
 import store from '@/store/index'
 import { ElMessage } from 'element-plus'
 
+const { DEV, VITE_OPEN_PROXY, VITE_APP_API_BASEURL } = import.meta.env
+
 const toLogin = () => {
     router.push({
         path: '/login',
@@ -14,7 +16,7 @@ const toLogin = () => {
 }
 
 const service = axios.create({
-    baseURL: import.meta.env.DEV ? '/proxy/' : import.meta.env.VITE_APP_API_BASEURL,
+    baseURL: DEV && VITE_OPEN_PROXY ? '/proxy/' : VITE_APP_API_BASEURL,
     timeout: 10000,
     responseType: 'json'
 })

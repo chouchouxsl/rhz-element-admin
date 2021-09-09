@@ -2,26 +2,24 @@
     <div class="user">
         <div class="tools">
             <span
-                v-if="$store.state.settings.enableNavSearch"
+                v-if="store.state.settings.enableNavSearch"
                 class="item"
                 @click="$eventBus.emit('global-search-toggle')"
             >
                 <svg-icon name="search" />
             </span>
             <span
-                v-if="
-                    $store.state.settings.mode === 'pc' && isFullscreenEnable && $store.state.settings.enableFullscreen
-                "
+                v-if="store.state.settings.mode === 'pc' && isFullscreenEnable && store.state.settings.enableFullscreen"
                 class="item"
                 @click="fullscreen"
             >
                 <svg-icon :name="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" />
             </span>
-            <span v-if="$store.state.settings.enablePageReload" class="item" @click="reload()">
+            <span v-if="store.state.settings.enablePageReload" class="item" @click="reload()">
                 <svg-icon name="toolbar-reload" />
             </span>
             <span
-                v-if="$store.state.settings.enableThemeSetting"
+                v-if="store.state.settings.enableThemeSetting"
                 class="item"
                 @click="$eventBus.emit('global-theme-toggle')"
             >
@@ -33,15 +31,15 @@
                 <el-avatar size="medium">
                     <i class="el-icon-user-solid" />
                 </el-avatar>
-                {{ $store.state.user.name }}
+                {{ store.state.user.account }}
                 <i class="el-icon-caret-bottom" />
             </div>
             <template #dropdown>
                 <el-dropdown-menu class="user-dropdown">
-                    <el-dropdown-item v-if="$store.state.settings.enableDashboard" command="dashboard">
+                    <el-dropdown-item v-if="store.state.settings.enableDashboard" command="dashboard">
                         控制台
                     </el-dropdown-item>
-                    <!-- <el-dropdown-item command="setting">个人设置</el-dropdown-item> -->
+                    <el-dropdown-item command="setting">个人设置</el-dropdown-item>
                     <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </template>
@@ -49,56 +47,58 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import screenfull from 'screenfull'
+import { computed, inject, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
-export default {
-    name: 'UserMenu',
-    inject: ['reload'],
-    data() {
-        return {
-            isFullscreenEnable: screenfull.isEnabled,
-            isFullscreen: false
-        }
-    },
-    mounted() {
-        if (screenfull.isEnabled) {
-            screenfull.on('change', this.fullscreenChange)
-        }
-    },
-    beforeUnmount() {
-        if (screenfull.isEnabled) {
-            screenfull.off('change', this.fullscreenChange)
-        }
-    },
-    methods: {
-        fullscreen() {
-            screenfull.toggle()
-        },
-        fullscreenChange() {
-            this.isFullscreen = screenfull.isFullscreen
-        },
-        userCommand(command) {
-            switch (command) {
-                case 'dashboard':
-                    this.$router.push({
-                        name: 'dashboard'
-                    })
-                    break
-                case 'setting':
-                    this.$router.push({
-                        name: 'personalSetting'
-                    })
-                    break
-                case 'logout':
-                    this.$store.dispatch('user/logout').then(() => {
-                        this.$router.push({
-                            name: 'login'
-                        })
-                    })
-                    break
-            }
-        }
+const reload = inject('reload')
+const store = useStore()
+const router = useRouter()
+
+const isFullscreenEnable = computed(() => screenfull.isEnabled)
+const isFullscreen = ref(false)
+
+onMounted(() => {
+    if (isFullscreenEnable.value) {
+        screenfull.on('change', fullscreenChange)
+    }
+})
+
+onBeforeUnmount(() => {
+    if (isFullscreenEnable.value) {
+        screenfull.off('change', fullscreenChange)
+    }
+})
+
+function fullscreen() {
+    screenfull.toggle()
+}
+
+function fullscreenChange() {
+    isFullscreen.value = screenfull.isFullscreen
+}
+
+function userCommand(command) {
+    switch (command) {
+        case 'dashboard':
+            router.push({
+                name: 'dashboard'
+            })
+            break
+        case 'setting':
+            router.push({
+                name: 'personalSetting'
+            })
+            break
+        case 'logout':
+            store.dispatch('user/logout').then(() => {
+                router.push({
+                    name: 'login'
+                })
+            })
+            break
     }
 }
 </script>
@@ -120,6 +120,31 @@ export default {
         cursor: pointer;
         vertical-align: middle;
         transition: all 0.3s;
+    }
+    .item-pro {
+        display: inline-block;
+        animation: pro-text 3s ease-out infinite;
+        @keyframes pro-text {
+            0%,
+            20% {
+                transform: scale(1);
+            }
+            50%,
+            70% {
+                transform: scale(1.2) translateX(-5px) translateY(-2px);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .title {
+            padding-left: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            background-image: linear-gradient(to right, #ffa237, #fc455d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     }
 }
 :deep(.user-container) {

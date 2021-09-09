@@ -7,7 +7,13 @@
                     <!-- 顶部模式 -->
                     <div class="nav">
                         <template v-for="(item, index) in $store.getters['menu/routes']">
-                            <div v-if="item.children && item.children.length !== 0" :key="index" class="item" :class="{'active': index == $store.state.menu.headerActived}" @click="switchMenu(index)">
+                            <div
+                                v-if="item.children && item.children.length !== 0"
+                                :key="index"
+                                class="item"
+                                :class="{ active: index == $store.state.menu.headerActived }"
+                                @click="switchMenu(index)"
+                            >
                                 <svg-icon v-if="item.meta.icon" :name="item.meta.icon" class="icon" />
                                 <span v-if="item.meta.title">{{ item.meta.title }}</span>
                             </div>
@@ -20,18 +26,12 @@
     </transition>
 </template>
 
-<script>
+<script setup>
 import Logo from '../Logo/index.vue'
 import UserMenu from '../UserMenu/index.vue'
+import { inject } from 'vue'
 
-export default {
-    name: 'Header',
-    components: {
-        Logo,
-        UserMenu
-    },
-    inject: ['switchMenu']
-}
+const switchMenu = inject('switchMenu')
 </script>
 
 <style lang="scss" scoped>

@@ -4,7 +4,6 @@ export default [
     {
         path: '/project',
         component: Layout,
-        name: 'project',
         redirect: '/project/index',
         meta: { title: '项目管理', icon: 'el-icon-menu' },
         children: [
@@ -37,7 +36,6 @@ export default [
     {
         path: '/product',
         component: Layout,
-        name: 'product',
         redirect: '/product/index',
         meta: { title: '产品管理', icon: 'el-icon-mobile' },
         children: [
@@ -64,7 +62,6 @@ export default [
     {
         path: '/function',
         component: Layout,
-        name: 'function',
         redirect: '/function/index',
         meta: { title: '功能管理', icon: 'el-icon-setting' },
         children: [

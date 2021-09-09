@@ -15,7 +15,7 @@ let globalSettings = {
      */
     menuMode: 'single',
     // Element 组件默认尺寸，支持：large、medium、small、mini
-    elementSize: 'large',
+    elementSize: 'medium',
     // 是否开启侧边栏展开收起按钮
     enableSidebarCollapse: true,
     // 侧边栏是否收起

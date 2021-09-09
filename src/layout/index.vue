@@ -1,19 +1,26 @@
 <template>
     <div class="layout">
-        <div id="app-main" :class="{'main-page-maximize': $store.state.settings.mainPageMaximizeStatus}">
+        <div id="app-main" :class="{ 'main-page-maximize': settings.mainPageMaximizeStatus }">
             <Header />
             <div class="wrapper">
-                <div class="sidebar-container" :class="{'show': $store.state.settings.mode === 'mobile' && !$store.state.settings.sidebarCollapse}">
+                <div
+                    class="sidebar-container"
+                    :class="{ show: settings.mode === 'mobile' && !settings.sidebarCollapse }"
+                >
                     <MainSidebar />
                     <SubSidebar />
                 </div>
-                <div class="sidebar-mask" :class="{'show': $store.state.settings.mode === 'mobile' && !$store.state.settings.sidebarCollapse}" @click="$store.commit('settings/toggleSidebarCollapse')" />
-                <div class="main-container" :style="{'padding-bottom': $route.meta.paddingBottom}">
+                <div
+                    class="sidebar-mask"
+                    :class="{ show: settings.mode === 'mobile' && !settings.sidebarCollapse }"
+                    @click="commit('settings/toggleSidebarCollapse')"
+                />
+                <div class="main-container" :style="{ 'padding-bottom': paddingBottom }">
                     <Topbar />
                     <div class="main">
                         <router-view v-slot="{ Component, route }">
                             <transition name="main" mode="out-in" appear>
-                                <keep-alive :include="$store.state.keepAlive.list">
+                                <keep-alive :include="keepAlive.list">
                                     <component :is="Component" :key="route.fullPath" />
                                 </keep-alive>
                             </transition>
@@ -29,7 +36,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import Header from './components/Header/index.vue'
 import MainSidebar from './components/MainSidebar/index.vue'
 import SubSidebar from './components/SubSidebar/index.vue'
@@ -37,65 +44,50 @@ import Topbar from './components/Topbar/index.vue'
 import Search from './components/Search/index.vue'
 import ThemeSetting from './components/ThemeSetting/index.vue'
 
-export default {
-    name: 'Layout',
-    components: {
-        Header,
-        MainSidebar,
-        SubSidebar,
-        Topbar,
-        Search,
-        ThemeSetting
-    },
-    provide() {
-        return {
-            reload: this.reload,
-            switchMenu: this.switchMenu
-        }
-    },
-    data() {
-        return {
-            routePath: ''
-        }
-    },
-    computed: {
-        showCopyright() {
-            return typeof this.$route.meta.copyright !== 'undefined' ? this.$route.meta.copyright : this.$store.state.settings.showCopyright
-        }
-    },
-    watch: {
-        '$store.state.settings.sidebarCollapse'(val) {
-            if (this.$store.state.settings.mode === 'mobile') {
-                if (!val) {
-                    document.querySelector('body').classList.add('hidden')
-                } else {
-                    document.querySelector('body').classList.remove('hidden')
-                }
-            }
-        }
-    },
-    mounted() {
-        this.$hotkeys('f5', e => {
-            if (this.$store.state.settings.enablePageReload) {
-                e.preventDefault()
-                this.reload()
-            }
-        })
-    },
-    methods: {
-        reload() {
-            this.$router.push({
-                name: 'reload'
-            })
-        },
-        switchMenu(index) {
-            this.$store.commit('menu/switchHeaderActived', index)
-            if (this.$store.state.settings.switchSidebarAndPageJump) {
-                this.$router.push(this.$store.getters['menu/sidebarRoutes'][0].path)
+import { provide, computed, watch, getCurrentInstance, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
+
+const { proxy } = getCurrentInstance()
+const {
+        state: { settings, keepAlive },
+        commit,
+        getters
+    } = useStore(),
+    {
+        meta: { copyright, paddingBottom }
+    } = useRoute(),
+    router = useRouter()
+
+const showCopyright = computed(() => {
+    return typeof copyright !== 'undefined' ? copyright : settings.showCopyright
+})
+
+watch(
+    () => settings.sidebarCollapse,
+    val => {
+        if (settings.mode === 'mobile') {
+            if (!val) {
+                document.querySelector('body').classList.add('hidden')
+            } else {
+                document.querySelector('body').classList.remove('hidden')
             }
         }
     }
-}
+)
+
+provide('reload', () => {
+    router.push({
+        name: 'reload'
+    })
+})
+
+provide('switchMenu', index => {
+    commit('menu/switchHeaderActived', index)
+    if (settings.switchSidebarAndPageJump) {
+        router.push(getters['menu/sidebarRoutes'][0].path)
+    }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -108,8 +100,8 @@ export default {
         margin-left: calc(#{$g-main-sidebar-width} + #{$g-sub-sidebar-width});
     }
     // 没有主侧边栏
-    &[data-menu-mode=head],
-    &[data-menu-mode=single] {
+    &[data-menu-mode='head'],
+    &[data-menu-mode='single'] {
         .sidebar-container {
             width: $g-sub-sidebar-width;
         }
@@ -127,8 +119,8 @@ export default {
         margin-left: calc(#{$g-main-sidebar-width} + 64px);
     }
     // 没有主侧边栏
-    &[data-menu-mode=head],
-    &[data-menu-mode=single] {
+    &[data-menu-mode='head'],
+    &[data-menu-mode='single'] {
         .sidebar-container {
             width: 64px;
         }
@@ -137,7 +129,7 @@ export default {
         }
     }
 }
-[data-mode=mobile] {
+[data-mode='mobile'] {
     .sidebar-container {
         width: calc(#{$g-main-sidebar-width} + #{$g-sub-sidebar-width});
         transform: translateX(-#{$g-main-sidebar-width}) translateX(-#{$g-sub-sidebar-width});
@@ -148,8 +140,8 @@ export default {
     .main-container {
         margin-left: 0;
     }
-    &[data-menu-mode=head],
-    &[data-menu-mode=single] {
+    &[data-menu-mode='head'],
+    &[data-menu-mode='single'] {
         .sidebar-container {
             width: calc(#{$g-main-sidebar-width} + #{$g-sub-sidebar-width});
             transform: translateX(-#{$g-main-sidebar-width}) translateX(-#{$g-sub-sidebar-width});

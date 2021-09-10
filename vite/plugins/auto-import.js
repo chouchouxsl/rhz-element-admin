@@ -1,3 +1,6 @@
+/**
+ * @description: 自动引入script setup Api 插件
+ */
 import autoImport from 'unplugin-auto-import/vite'
 
 export default function createAutoImport() {
@@ -6,7 +9,7 @@ export default function createAutoImport() {
             'vue',
             'vue-router',
             {
-                'vuex': ['useStore']
+                vuex: ['useStore']
             }
         ]
     })

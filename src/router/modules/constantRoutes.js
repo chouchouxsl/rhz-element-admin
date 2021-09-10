@@ -21,6 +21,11 @@ const constantRoutes = [
                 meta: {
                     title: () => store.state.settings.dashboardTitle
                 }
+            },
+            {
+                path: 'reload',
+                name: 'reload',
+                component: () => import('@/views/reload.vue')
             }
         ]
     }

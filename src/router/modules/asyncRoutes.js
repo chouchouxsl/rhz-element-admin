@@ -1,5 +1,3 @@
-import MultilevelMenuExample from './multilevel.menu.example'
-import BreadcrumbExample from './breadcrumb.example'
 import customizationRoutes from './customizationRoutes'
 
 // 动态路由（异步路由、导航栏路由）

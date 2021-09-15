@@ -19,9 +19,9 @@
                     <Topbar />
                     <div class="main">
                         <router-view v-slot="{ Component, route }">
-                            <transition name="main" mode="out-in" appear>
+                            <transition :name="route.meta.transition || 'fade-transform'" mode="out-in" appear>
                                 <keep-alive :include="keepAlive.list">
-                                    <component :is="Component" :key="route.fullPath" />
+                                    <component :is="Component" :key="route.path" />
                                 </keep-alive>
                             </transition>
                         </router-view>
@@ -280,21 +280,5 @@ header + .wrapper {
             top: calc(#{$g-header-height} + #{$g-topbar-height});
         }
     }
-}
-
-// 主内容区动画
-.main-enter-active {
-    transition: 0.2s;
-}
-.main-leave-active {
-    transition: 0.15s;
-}
-.main-enter-from {
-    opacity: 0;
-    margin-left: -20px;
-}
-.main-leave-to {
-    opacity: 0;
-    margin-left: 20px;
 }
 </style>

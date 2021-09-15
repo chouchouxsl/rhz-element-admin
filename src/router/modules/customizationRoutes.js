@@ -11,7 +11,13 @@ export default [
                 path: 'index',
                 name: 'project',
                 component: () => import('@/views/project/index'),
-                meta: { title: '项目管理', sidebar: false, breadcrumb: false, activeMenu: '/project' }
+                meta: {
+                    transition: 'el-zoom-in-center',
+                    title: '项目管理',
+                    sidebar: false,
+                    breadcrumb: false,
+                    activeMenu: '/project'
+                }
             },
             {
                 path: 'addItem',
@@ -69,7 +75,7 @@ export default [
                 path: 'index',
                 name: 'function',
                 component: () => import('@/views/function/index'),
-                meta: { title: '功能管理', sidebar: false, breadcrumb: false, activeMenu: '/function' }
+                meta: { title: '功能管理', cache: true, sidebar: false, breadcrumb: false, activeMenu: '/function' }
             },
             {
                 path: 'add',

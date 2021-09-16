@@ -111,7 +111,7 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                 ref="login"
                 :model="loginForm"
                 :rules="loginRules"
-                class="login-form"
+                class="login-form enter-x"
                 autocomplete="on"
                 label-position="left"
             >
@@ -119,7 +119,7 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                     <h3 class="title">{{ title }}管理后台</h3>
                 </div>
                 <div>
-                    <el-form-item prop="username">
+                    <el-form-item prop="username" class="enter-x">
                         <el-input
                             ref="name"
                             v-model="loginForm.username"
@@ -133,7 +133,7 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                             </template>
                         </el-input>
                     </el-form-item>
-                    <el-form-item prop="password">
+                    <el-form-item prop="password" class="enter-x">
                         <el-input
                             ref="password"
                             v-model="loginForm.password"
@@ -159,10 +159,17 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                     <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>
                     <el-button type="text" @click="formType = 'reset'">忘记密码</el-button>
                 </div> -->
-                <el-button :loading="loading" type="primary" style="width: 100%" @click.prevent="handleLogin">
+                <el-button
+                    :loading="loading"
+                    type="primary"
+                    style="width: 100%"
+                    @click.prevent="handleLogin"
+                    class="enter-x"
+                >
                     登 录
                 </el-button>
                 <div
+                    class="enter-x"
                     style="
                         margin-top: 20px;
                         margin-bottom: -10px;

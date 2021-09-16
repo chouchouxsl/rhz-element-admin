@@ -89,6 +89,7 @@
 import { getFuncList, delFuncItem, updateFuncStatus, delFunctionBefore } from '@/api/function'
 import PageHeader from '@/components/pageHeader'
 export default {
+    name: 'xxx',
     components: {
         PageHeader
     },

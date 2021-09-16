@@ -3,8 +3,6 @@ import App from './App.vue'
 import store from '@/store'
 import router from '@/router'
 
-// windi css库
-import 'virtual:windi.css'
 // 路由守卫
 import './routerGuard'
 // ElementPlus
@@ -14,6 +12,8 @@ import 'element-plus/dist/index.css'
 import 'virtual:svg-icons-register'
 // 全局样式
 import '@/assets/styles/globals.scss'
+// windi css库
+import 'virtual:windi.css'
 // 工具
 import globalProperties from '@/util/global.properties'
 // 自定义指令

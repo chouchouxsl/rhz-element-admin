@@ -105,7 +105,7 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
     <div>
         <div class="bg-banner" />
         <div id="login-box">
-            <div class="login-banner" />
+            <div class="login-banner -enter-x" />
             <el-form
                 v-show="formType == 'login'"
                 ref="login"
@@ -115,7 +115,7 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
                 autocomplete="on"
                 label-position="left"
             >
-                <div class="title-container">
+                <div class="title-container enter-x">
                     <h3 class="title">{{ title }}管理后台</h3>
                 </div>
                 <div>

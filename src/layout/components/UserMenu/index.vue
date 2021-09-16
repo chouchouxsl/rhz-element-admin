@@ -108,6 +108,7 @@ function userCommand(command) {
 }
 .tools {
     margin-right: 20px;
+    display: flex;
     .item {
         margin-left: 5px;
         padding: 6px 8px;

@@ -61,15 +61,11 @@ const isFullscreenEnable = computed(() => screenfull.isEnabled)
 const isFullscreen = ref(false)
 
 onMounted(() => {
-    if (isFullscreenEnable.value) {
-        screenfull.on('change', fullscreenChange)
-    }
+    isFullscreenEnable.value && screenfull.on('change', fullscreenChange)
 })
 
 onBeforeUnmount(() => {
-    if (isFullscreenEnable.value) {
-        screenfull.off('change', fullscreenChange)
-    }
+    isFullscreenEnable.value && screenfull.off('change', fullscreenChange)
 })
 
 function fullscreen() {

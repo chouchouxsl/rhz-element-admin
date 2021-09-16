@@ -49,7 +49,13 @@ export default [
                 path: 'index',
                 name: 'product',
                 component: () => import('@/views/product/index'),
-                meta: { title: '产品管理', sidebar: false, breadcrumb: false, activeMenu: '/product' }
+                meta: {
+                    transition: 'scale',
+                    title: '产品管理',
+                    sidebar: false,
+                    breadcrumb: false,
+                    activeMenu: '/product'
+                }
             },
             {
                 path: 'add',
@@ -75,7 +81,14 @@ export default [
                 path: 'index',
                 name: 'function',
                 component: () => import('@/views/function/index'),
-                meta: { title: '功能管理', cache: true, sidebar: false, breadcrumb: false, activeMenu: '/function' }
+                meta: {
+                    transition: 'scale',
+                    title: '功能管理',
+                    cache: false,
+                    sidebar: false,
+                    breadcrumb: false,
+                    activeMenu: '/function'
+                }
             },
             {
                 path: 'add',

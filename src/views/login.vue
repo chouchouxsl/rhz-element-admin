@@ -276,6 +276,7 @@ const { title, formType, loginForm, loginRules, resetForm, resetRules, loading, 
     width: 100%;
     height: 100%;
     background-color: #666;
+    background-image: url('../assets/images/login-bg.jpg');
     background-size: cover;
     background-position: center center;
 }

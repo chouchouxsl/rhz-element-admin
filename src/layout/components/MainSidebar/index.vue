@@ -1,14 +1,22 @@
 <template>
     <transition name="main-sidebar">
-        <div v-if="$store.state.settings.menuMode === 'side' || $store.state.settings.mode === 'mobile'" class="main-sidebar-container">
+        <div
+            v-if="$store.state.settings.menuMode === 'side' || $store.state.settings.mode === 'mobile'"
+            class="main-sidebar-container"
+        >
             <Logo :show-title="false" class="sidebar-logo" />
             <!-- 侧边栏模式（含主导航） -->
             <div class="nav">
                 <template v-for="(item, index) in $store.getters['menu/routes']">
-                    <div v-if="item.children && item.children.length !== 0" :key="index" :class="{
-                        'item': true,
-                        'active': index === $store.state.menu.headerActived
-                    }" :title="item.meta.title" @click="switchMenu(index)"
+                    <div
+                        v-if="item.children && item.children.length !== 0"
+                        :key="index"
+                        :class="{
+                            item: true,
+                            active: index === $store.state.menu.headerActived
+                        }"
+                        :title="item.meta.title"
+                        @click="switchMenu(index)"
                     >
                         <svg-icon v-if="item.meta.icon" :name="item.meta.icon" class="icon" />
                         <span>{{ item.meta.title }}</span>

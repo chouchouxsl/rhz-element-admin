@@ -3,6 +3,8 @@ import App from './App.vue'
 import store from '@/store'
 import router from '@/router'
 
+// windi css库
+import 'virtual:windi.css'
 // 路由守卫
 import './routerGuard'
 // ElementPlus

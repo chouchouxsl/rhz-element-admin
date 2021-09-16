@@ -1,5 +1,6 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import WindiCSS from 'vite-plugin-windicss'
 
 import createRestart from './restart'
 import createHtml from './html'
@@ -13,7 +14,7 @@ import createAutoImport from './auto-import'
 // import createElement from './element'
 
 export default function createVitePlugins(viteEnv, isBuild = false) {
-    const vitePlugins = [vue(), vueJsx()]
+    const vitePlugins = [vue(), vueJsx(), WindiCSS()]
     !isBuild && vitePlugins.push(createRestart())
     vitePlugins.push(createHtml(viteEnv, isBuild))
     vitePlugins.push(createComponents())

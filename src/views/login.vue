@@ -81,8 +81,9 @@ const handleFind = () => {
 }
 // 测试
 const testAccount = () => {
-    data.loginForm.username = 'gongyuman@able-elec.com'
-    data.loginForm.password = 'man115'
+    /* 定制化后台：用户名：zhs_admin  密码：zhs_admin2021 */
+    data.loginForm.username = 'zhs_admin'
+    data.loginForm.password = 'zhs_admin2021'
     handleLogin()
 }
 

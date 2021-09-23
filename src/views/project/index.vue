@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <PageHeader>
+        <PageHeader class="enter-y">
             <template #left>
                 <el-row :gutter="10">
                     <el-col :span="12">
@@ -32,7 +32,7 @@
                 <el-button type="primary" icon="el-icon-plus" @click="addItem">新增项目</el-button>
             </template>
         </PageHeader>
-        <div class="main-list">
+        <div class="main-list enter-y">
             <!-- 表格 -->
             <el-table ref="multipleTable" :data="tableData" style="width: 100%">
                 <el-table-column align="center" type="index" width="50" label="序号"></el-table-column>

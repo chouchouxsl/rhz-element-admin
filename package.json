@@ -1,5 +1,5 @@
 {
-    "name": "fantastic-admin",
+    "name": "rhz-admin",
     "version": "0.1.0",
     "scripts": {
         "start": "npm run dev",

@@ -81,9 +81,9 @@ const handleFind = () => {
 }
 // 测试
 const testAccount = () => {
-    /* 定制化后台：用户名：zhs_admin  密码：zhs_admin2021 */
-    data.loginForm.username = 'zhs_admin'
-    data.loginForm.password = 'zhs_admin2021'
+    // /* 定制化后台：用户名：admin  密码：admin2021 */
+    // data.loginForm.username = 'admin'
+    // data.loginForm.password = 'admin2021'
     handleLogin()
 }
 
